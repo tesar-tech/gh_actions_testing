@@ -17,6 +17,9 @@ on:
 jobs:
   get-correct-name:
     runs-on: ubuntu-latest
+    steps:
+      - name: step name
+        run: echo kdesi cosi
     outputs:
       name: ${{ contains(github.sha, '5') && 'name one' || 'name two' }}  
       name2: ${{ contains(github.sha, '1232') && 'true 1232' || 'f 1232' }}  
