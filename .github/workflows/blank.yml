@@ -43,5 +43,27 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo ${{needs.get-correct-name.outputs.name}},
+          echo ${{needs.get-correct-name.outputs.name2}},
           echo sha is ${{github.sha}}
           echo test, and deploy your project.
+          
+  telegram-notif:
+    name: telegram notif
+    needs: [get-correct-name]
+    runs-on: ubuntu-latest
+    steps:
+      - name: send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit ${{needs.get-correct-name.outputs.name}}:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}} 
+            
+            ${{needs.get-correct-name.outputs.name2}}
+          
