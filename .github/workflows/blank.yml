@@ -56,6 +56,7 @@ jobs:
       - name: send telegram message on push
         uses: appleboy/telegram-action@master
         with:
+          format: html
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           disable_web_page_preview: true
@@ -64,6 +65,7 @@ jobs:
             DON't pay attention to this. Just testing.
             ${{ github.actor }} ✔️ ✔️ ❌ ❌ created commit ${{needs.get-correct-name.outputs.name}}:
             Commit message: ${{ github.event.commits[0].message }}
+            <br/>
             <a href="https://github.com/${{ github.repository }}/commit/${{github.sha}}">See on gh</a>
             Repository: ${{ github.repository }}
             
